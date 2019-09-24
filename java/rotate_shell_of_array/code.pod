@@ -1,0 +1,38 @@
+=encoding utf8
+
+=pod
+
+    private static void RotateShell(int n, int shellIdx) {
+        int length = n-2*shellIdx;
+        String[] top = new String[length];
+        String[] bottom = new String[length];
+        String[] left = new String[length];
+        String[] right = new String[length];
+        for (int i = 0; i < length; i++) {
+            top[i] = pane[shellIdx][shellIdx+i];
+        }
+        for (int i = 0; i < length; i++) {
+            right[i] = pane[shellIdx+i][shellIdx+length-1];
+        }
+        for (int i = 0; i < length; i++) {
+            bottom[i] = pane[shellIdx+length-1][shellIdx+length-1-i];
+        }
+        for (int i = 0; i < length; i++) {
+            left[i] = pane[shellIdx+length-1-i][shellIdx];
+        }
+
+        for (int i = 0; i < length; i++) {
+            pane[shellIdx+i][shellIdx+length-1] = top[i];
+        }
+        for (int i = 0; i < length; i++) {
+            pane[shellIdx+length-1][shellIdx+length-1-i] = right[i];
+        }
+        for (int i = 0; i < length; i++) {
+            pane[shellIdx+length-1-i][shellIdx] = bottom[i];
+        }
+        for (int i = 0; i < length; i++) {
+            pane[shellIdx][shellIdx+i] = left[i];
+        }
+    }
+
+=cut
