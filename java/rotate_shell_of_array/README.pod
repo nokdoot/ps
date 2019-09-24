@@ -2,37 +2,73 @@
 
 =pod
 
-    private static void RotateShell(int n, int shellIdx) {
+    static array[][] map;
+
+    private static void RotateShellByLength(int n, int shellIdx) {
         int length = n-2*shellIdx;
         String[] top = new String[length];
         String[] bottom = new String[length];
         String[] left = new String[length];
         String[] right = new String[length];
         for (int i = 0; i < length; i++) {
-            top[i] = pane[shellIdx][shellIdx+i];
+            top[i] = map[shellIdx][shellIdx+i];
         }
         for (int i = 0; i < length; i++) {
-            right[i] = pane[shellIdx+i][shellIdx+length-1];
+            right[i] = map[shellIdx+i][shellIdx+length-1];
         }
         for (int i = 0; i < length; i++) {
-            bottom[i] = pane[shellIdx+length-1][shellIdx+length-1-i];
+            bottom[i] = map[shellIdx+length-1][shellIdx+length-1-i];
         }
         for (int i = 0; i < length; i++) {
-            left[i] = pane[shellIdx+length-1-i][shellIdx];
+            left[i] = map[shellIdx+length-1-i][shellIdx];
         }
 
         for (int i = 0; i < length; i++) {
-            pane[shellIdx+i][shellIdx+length-1] = top[i];
+            map[shellIdx+i][shellIdx+length-1] = top[i];
         }
         for (int i = 0; i < length; i++) {
-            pane[shellIdx+length-1][shellIdx+length-1-i] = right[i];
+            map[shellIdx+length-1][shellIdx+length-1-i] = right[i];
         }
         for (int i = 0; i < length; i++) {
-            pane[shellIdx+length-1-i][shellIdx] = bottom[i];
+            map[shellIdx+length-1-i][shellIdx] = bottom[i];
         }
         for (int i = 0; i < length; i++) {
-            pane[shellIdx][shellIdx+i] = left[i];
+            map[shellIdx][shellIdx+i] = left[i];
         }
+    }
+
+    private static void RotateShellByUnit(int n, int shellIdx) {
+        int length = n-2*shellIdx;
+        String[] top = new String[length];
+        String[] bottom = new String[length];
+        String[] left = new String[length];
+        String[] right = new String[length];
+        for (int i = 0; i < length; i++) {
+            top[i] = map[shellIdx][shellIdx+i];
+        }
+        for (int i = 0; i < length; i++) {
+            right[i] = map[shellIdx+i][shellIdx+length-1];
+        }
+        for (int i = 0; i < length; i++) {
+            bottom[i] = map[shellIdx+length-1][shellIdx+length-1-i];
+        }
+        for (int i = 0; i < length; i++) {
+            left[i] = map[shellIdx+length-1-i][shellIdx];
+        }
+
+        for (int i = 1; i < length; i++) {
+            map[shellIdx][shellIdx+i] = top[i-1];
+        }
+        for (int i = 1; i < length; i++) {
+            map[shellIdx+i][shellIdx+length-1] = right[i-1];
+        }
+        for (int i = 1; i < length; i++) {
+            map[shellIdx+length-1][shellIdx+length-1-i] = bottom[i-1];
+        }
+        for (int i = 1; i < length; i++) {
+            map[shellIdx+length-1-i][shellIdx] = left[i-1];
+        }
+        
     }
 
 =cut
