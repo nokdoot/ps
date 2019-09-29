@@ -1,0 +1,31 @@
+=encoding utf8
+
+=pod
+
+=head1 sort for List<Scalar>
+
+ Collections.sort(list);
+
+ Collections.sort(list, Collections.reverseOrder());
+
+=head1 sort for List<Object>
+
+ Collections.sort(list, new Comparator<Object>() {
+     @Override
+     public int compare(Object o1, Object o2) {
+         return Integer.compare(((Obj) o1).a, ((Obj) o2).b);
+     }
+ });
+
+ // 또는 Object 를 다음처럼 구현
+
+ /*
+ class Object implements Comparable<Object> {
+    @Override
+    public int compareTo(Object s) {
+        return 0;
+    }
+ }
+ */
+
+=cut
