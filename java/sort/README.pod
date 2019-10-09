@@ -28,4 +28,6 @@
  }
  */
 
+ // reverse 는 compare return 값을 뒤집어 주자.
+
 =cut

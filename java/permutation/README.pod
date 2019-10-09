@@ -1,0 +1,20 @@
+=encoding utf8
+
+=pod
+
+=head1 PermutationBits
+
+ex) length = 3
+
+["000", "001", "010", "011", "100", "101", "110", "111"]
+
+    public static String[] MakePermutationBits(int length) {
+        String[] bits = new String[(int)Math.pow(2, length)];
+        for (int i = 0; i < Math.pow(2, length); i++) {
+            String s = String.format("%"+length+"s", Integer.toBinaryString(i)).replace(' ', '0');
+            bits[i] = s;
+        }
+        return bits;
+    }
+
+=cut
