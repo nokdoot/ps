@@ -1,6 +1,10 @@
 import java.util.*;
 import java.io.*;
 
+/**
+ * @author nokdoot
+ */
+
 public class Main {
 
     static String line;
