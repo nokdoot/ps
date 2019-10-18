@@ -11,7 +11,6 @@ my $q = $line;
 for (1..$q) {
     chomp ($line = <STDIN>);
     my ($n, $r) = split q{ }, $line;
-    $r++;
     chomp ($line = <STDIN>);
     my @monsters = split q{ }, $line;
 
@@ -23,13 +22,13 @@ for (1..$q) {
     @monsters = sort { $a <=> $b } keys %$set;
 
     my $answer = 0;
-    my $i = 0;
-    while ( $i < @monsters ) {
-        if ( $r * $answer <= $monsters[$i] ) {
-            pop @monsters;
+    my $i = @monsters-1;
+    while ( $i >= 0 ) {
+        if ( $monsters[$i] > $answer * $r ) {
             $answer++;
         }
-        $i++;
+        $i--;
     }
+
     say $answer;
 }

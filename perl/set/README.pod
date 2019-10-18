@@ -1,0 +1,17 @@
+=encoding utf8
+
+=pod
+
+=head1 set
+
+ my %set = (
+    key1 => value1,
+    key2 => value2,
+    key3 => value3,
+ );
+
+=head1 set to array
+
+ my @array = keys %set;
+
+=cut

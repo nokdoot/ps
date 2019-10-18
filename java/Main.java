@@ -1,5 +1,6 @@
 import java.util.*;
 import java.io.*;
+import static java.lang.Integer.parseInt;
 
 /**
  * @author nokdoot
@@ -12,9 +13,9 @@ public class Main {
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
     public static void main(String[] args) throws IOException {
-        Question();
+        Quest();
     }
 
-    public static void Question() throws IOException {
+    public static void Quest() throws IOException {
     }
 }
