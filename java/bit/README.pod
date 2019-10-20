@@ -1,0 +1,50 @@
+=encoding utf8
+=pod
+
+=head1 Bits as boolean[] to int
+
+    // Right to left like 111 = 7, 10 = 2
+    public static int ArrayOfBooleanToInt(boolean[] bools) {
+        int n = bools.length;
+
+        int value = 0;
+        for ( int i = 1; i <= n; i++ ) {
+            boolean bool = bools[n-i];
+            if (bool) {
+                value += 1 << i-1;
+            }
+        }
+        return value;
+    }
+
+=head1 int to Bits as boolean[]
+
+    public static boolean[] IntToArrayOfBoolean(int value) {
+        int n = (int) ( (Math.log(value) / Math.log(2)) + 1);
+        boolean[] bools = new boolean[n];
+        
+        for ( n--; n >= 0; n-- ) {
+            bools[n] = value%2 == 1 ? true : false;
+            value /= 2;
+        }
+        
+        return bools;
+    }
+
+=head1 return number of true on bits
+
+    public static int CountOfTrueOnNumber(int number) {
+        // IntToArrayOfBoolean 함수는 위에 있음.
+        boolean[] bools = IntToArrayOfBoolean(number);
+        return CountOfTrue(bools);
+    }
+
+    public static int CountOfTrue(boolean[] bools) {
+        int count = 0;
+        for (boolean bool : bools) {
+            if (bool) count++;
+        }
+        return count;
+    }
+
+=cut

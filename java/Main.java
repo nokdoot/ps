@@ -1,6 +1,5 @@
 import java.util.*;
 import java.io.*;
-import static java.lang.Integer.parseInt;
 
 /**
  * @author nokdoot
@@ -17,5 +16,21 @@ public class Main {
     }
 
     public static void Quest() throws IOException {
+    }
+
+    public static String NextString() throws IOException {
+        return NextToken();
+    }
+
+    public static int NextInt() throws IOException {
+        return Integer.parseInt(NextToken());
+    }
+
+    public static String NextToken() throws IOException {
+        if ( st == null || !st.hasMoreTokens() ) {
+            line = br.readLine();
+            st = new StringTokenizer(line);
+        }
+        return st.nextToken();
     }
 }
