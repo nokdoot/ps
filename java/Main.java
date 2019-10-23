@@ -18,16 +18,16 @@ public class Main {
     public static void Quest() throws IOException {
     }
 
-    public static String NextString() throws IOException {
-        return NextToken();
+    public static String ReadString() throws IOException {
+        return ReadToken();
     }
 
-    public static int NextInt() throws IOException {
-        return Integer.parseInt(NextToken());
+    public static int ReadInt() throws IOException {
+        return Integer.parseInt(ReadToken());
     }
 
-    public static String NextToken() throws IOException {
-        if ( st == null || !st.hasMoreTokens() ) {
+    public static String ReadToken() throws IOException {
+        while ( st == null || !st.hasMoreTokens() ) {
             line = br.readLine();
             st = new StringTokenizer(line);
         }

@@ -2,6 +2,25 @@
 
 =pod
 
+=head1 sort for Array of Int Type
+
+ Arrays.sort(arr);
+
+ public static void SortArrayInDesc(int[] arr) {
+    Arrays.sort(arr);
+
+    int l = 0;
+    int r = arr.length-1;
+    
+    while ( l < r ) {
+        int tmp = arr[l];
+        arr[l] = arr[r];
+        arr[r] = tmp;
+        l++;
+        r--;
+    }
+ }
+
 =head1 sort for List<Scalar>
 
  Collections.sort(list);
