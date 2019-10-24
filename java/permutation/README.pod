@@ -2,7 +2,7 @@
 
 =pod
 
-=head1 PermutationBits
+=head1 Bits Permutation
 
 ex) length = 3
 
@@ -15,6 +15,147 @@ ex) length = 3
             bits[i] = s;
         }
         return bits;
+    }
+
+=head1 Permutation for String having not dups
+
+    /* 
+    *  Cracking the coding interview, 189 Programming Questions and Solutions
+    */
+
+    // "1122" -> 24
+
+    public static ArrayList<String> getPerms(String str) {
+        ArrayList<String> result = new ArrayList<>();
+        getPerms("", str, result);
+        return result;
+    }
+
+    public static void getPerms(String prefix, String remainder, ArrayList<String> result) {
+        if ( remainder.length() == 0 ) result.add(prefix);
+
+        int len = remainder.length();
+        for ( int i=0; i<len; i++ ) {
+            String before = remainder.substring(0, i);
+            String after = remainder.substring(i+1, len);
+            char c = remainder.charAt(i);
+            getPerms(prefix + c, before + after, result ) ;
+        }
+    }
+
+
+=head1 Permutation for String having dups
+
+    /* 
+    *  Cracking the coding interview, 189 Programming Questions and Solutions
+    */
+
+    // "1122" -> 6
+
+    // aabbbbc -> ( a->2 | b->4 | c->1 )
+    // P(a->2 | b->4 | c->1) = { a + P(a->1 | b->4 | c->1) } 
+                               + { b + P(a->2 | b->3 | c->1) }
+                               + { c + P(a->2 | b->4 | c->0) }
+
+    public static ArrayList<String> getPerms(String s) {
+        ArrayList<String> result = new ArrayList<>();
+        HashMap<Character, Integer> map = buildFreqTable(s);
+        getPerms(map, "", s.length(), result);
+        return result;
+    }
+
+    public static HashMap<Character, Integer> buildFreqTable(String s) {
+        HashMap<Character, Integer> map = new HashMap<>();
+        for ( char c : s.toCharArray() ) {
+            if ( !map.containsKey(c) ) {
+                map.put(c, 0);
+            }
+            map.put(c, map.get(c) + 1);
+        }
+        return map;
+    }
+
+    public static void getPerms(HashMap<Character, Integer> map, String prefix, int remaining, ArrayList<String> result) {
+        if ( remaining == 0 ) {
+            result.add(prefix);
+            return;
+        }
+
+        for (Character c : map.keySet() ) {
+            int count = map.get(c);
+            if ( count > 0 ) {
+                map.put(c, count-1);
+                getPerms(map,prefix + c, remaining - 1, result);
+                map.put(c, count);
+            }
+        }
+    }
+
+=head1 N invalid parentheses 1
+
+    /* 
+    *  Cracking the coding interview, 189 Programming Questions and Solutions
+    */
+
+    // 첫 번째 left paren 다음,
+    // 두 번째 left paren 다음
+    // .... 에 새로운 괄호 쌍이 올 수 있다.
+
+    public static Set<String> generateParens(int remaining) {
+        Set<String> set = new HashSet<>();
+        if (remaining == 0) {
+            set.add("");
+        }
+        else {
+            Set<String> prev = generateParens(remaining - 1);
+            for (String str : prev) {
+                for (int i = 0; i < str.length(); i++) {
+                    if (str.charAt(i) == '(') {
+                        String s = insertInside(str, i);
+                        set.add(s);
+                    }
+                }
+                set.add("()" + str);
+            }
+        }
+        return set;
+    }
+
+    private static String insertInside(String str, int leftIndex) {
+        String left = str.substring(0, leftIndex + 1);
+        String right = str.substring(leftIndex + 1, str.length());
+        return left + "()" + right;
+    }
+
+=head1 N invalid parentheses 2 ( eifficient )
+
+    /* 
+    *  Cracking the coding interview, 189 Programming Questions and Solutions
+    */
+
+    // Q : left paren 과 right paren 을 언제 사용할 수 있는지?
+    // A : left paren 은 언제나 사용 가능.
+    //     right paren 은 left paren 의 수를 넘지 않도록 사용 가능.
+
+    public static void addParen(ArrayList<String> list, int leftRem, int rightRem, char[] str, int index) {
+        if (leftRem < 0 || rightRem < leftRem) return;
+
+        if (leftRem == 0 && rightRem == 0) {/*Out of left and right parentheses */
+            list.add(String.copyValueOf(str));
+        } else {
+            str[index] = '(';
+            addParen(list, leftRem - 1, rightRem,  str, index + 1);
+
+            str[index] = ')';
+            addParen(list, leftRem, rightRem - 1, str, index + 1);
+        }
+    }
+
+    public static ArrayList<String> generateParens(int count) {
+        char[] str = new char[count*2];
+        ArrayList<String> list = new ArrayList<>();
+        addParen(list, count, count, str, 0);
+        return list;
     }
 
 =cut
