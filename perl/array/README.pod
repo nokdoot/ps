@@ -1,0 +1,16 @@
+=encoding utf8
+=pod
+
+=head1 If Two arrays are same
+
+    sub are_same_arrays {
+        my ($arr1, $) = @_;
+        for my $y (0..$#$arr1) {
+            for my $x (0..$#{$arr1->[$y]}) {
+                return FALSE if $arr1->[$y][$x] ne $arr2->[$y][$x];
+            }
+        }
+        return TRUE;
+    }
+
+=cut
