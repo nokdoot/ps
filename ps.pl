@@ -3,53 +3,37 @@
 use strict;
 use warnings;
 use feature qw/ say /;
-
+    
+# essential
 my @tokens = ();
 
 my $n = read_token();
+my $k = read_token();
 
-my @locations = ();
-for ( 1..$n ) {
-    push @locations, read_token();
-}
-
-my $l = 1;
-my $r = ($n-1) * $l;
-
-my $min = abs($locations[1] - $l) + abs($locations[-1] - $r);
-
-while ( 1 ) {
-    $l++;
-    $r = ($n-1) * $l;
-    my $new_min = abs($locations[1] - $l) + abs($locations[-1] - $r);
-    if ( $new_min < $min ) {
-        $min = $new_min;
-        next;
+while ( $k > 0 ) {
+    my $r = $n % 10;
+    if ( $r == 0 ) { 
+        $n = int($n / 10);
+        $k--;
     }
-    $l--;
-    last;
+    else {
+        $r = min($r, $k);
+        $k -= $r;
+        $n -= $r;
+    }
 }
-
-my $answer = 0;
-shift @locations;
-my $i = 1;
-while (@locations) {
-    $answer += abs ( $i * $l - (shift @locations) );
-    $i++;
-}
-
-say $answer;
+say $n;
 
 sub read_line {
     chomp (my $line = <STDIN>);
     return $line;
 }
-
+    
 sub read_token {
     @tokens = split q{ }, read_line() if @tokens == 0;
     return shift @tokens;
 }
-
+    
 sub min {
     my @numbers = @_;
     my $min = shift @numbers;
@@ -58,7 +42,7 @@ sub min {
     }
     return $min;
 }
-
+    
 sub max {
     my @numbers = @_;
     my $max = shift @numbers;
@@ -67,7 +51,7 @@ sub max {
     }
     return $max;
 }
-
+    
 sub sum {
     my @numbers = @_;
     my $sum = 0;
