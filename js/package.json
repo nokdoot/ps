@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "xlsx": "node -r esm xlsx/main.js",
     "sqlite3": "node -r esm sqlite3/main.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -11,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "esm": "^3.2.25",
-    "sqlite3": "^4.1.1"
+    "sqlite3": "^4.1.1",
+    "xlsx": "^0.15.4"
   }
 }
