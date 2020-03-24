@@ -5,12 +5,16 @@
   "main": "index.js",
   "scripts": {
     "sqlite3": "node -r esm sqlite3/main.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --require esm"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "esm": "^3.2.25",
+    "mocha": "^7.0.1",
     "sqlite3": "^4.1.1"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0"
   }
 }
