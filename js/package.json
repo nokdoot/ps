@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "xlsx": "node -r esm xlsx/main.js",
     "sqlite3": "node -r esm sqlite3/main.js",
     "test": "mocha --require esm"
   },

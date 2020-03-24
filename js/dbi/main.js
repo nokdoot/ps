@@ -5,7 +5,6 @@ const api = {};
 
 const db = new sqlite3.Database(`${__dirname}/db`);
 
-
 db.serialize(function() {
   db.run("CREATE TABLE lorem (info TEXT)");
 
