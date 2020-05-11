@@ -3,10 +3,18 @@
 use strict;
 use warnings;
 use feature qw/ say /;
-use POSIX qw/ ceil /;
-    
+
+use Carp;
+
 # essential
 my @tokens = ();
+
+sub ceil {
+    my $n = shift;
+    my $in = int($n);
+    return $n if $in == $n;
+    return $in + 1;
+}
 
 sub read_line {
     chomp (my $line = <STDIN>);
@@ -45,26 +53,61 @@ sub sum {
     return $sum;
 }
 
-# solve
-
-my @chars = split q{}, read_line;
-
-my $answer = 0;
-my $n = @chars;
-my $count_of_a = 0;
-
-for (@chars) {
-    $count_of_a++ if $_ eq 'a';
+sub ref_ref_scalar {
+    my $ref = shift;
+    return 1 if ref($ref) eq 'SCALAR';
 }
 
-if ( ceil($n/2) <= $count_of_a ) {
-    $answer = $n;
+sub toggle {
+    my $ref = shift;
+    croak "$ref does not reference to scalar" if !ref_ref_scalar($ref);
+
+    $$ref = !$$ref;
 }
-else {
-    while ( ceil($n/2) > $count_of_a ) {
-        $answer++;
-        $n--;
+
+sub odd {
+    my $num = shift;
+    return $num % 2 == 1;
+}
+
+sub even {
+    my $num = shift;
+    return $num % 2 == 0;
+}
+
+sub sum_of_digits {
+    my $n = shift;
+    my @numbers = split q{}, $n;
+
+    my $sum = 0;
+
+    for (@numbers) {
+        $sum += $_;
     }
+
+    return $sum;
 }
 
-say $answer;
+# solution
+
+sub interpolation {
+    my ($n, $u) = @_;
+    return 0 if $n == 0;
+    return $u - $n;
+}
+
+my $n = read_token;
+
+my $sum = sum_of_digits($n);
+
+my $remains = $sum % 4;
+
+if ($remains == 0) {
+    say $n;
+    exit(0);
+}
+
+while (sum_of_digits(++$n) % 4 != 0) {
+}
+
+say $n;
