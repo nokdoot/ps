@@ -16,6 +16,11 @@ sub ceil {
     return $in + 1;
 }
 
+sub say_all {
+    my @args = @_;
+    say join ' ', @args;
+}
+
 sub read_line {
     chomp (my $line = <STDIN>);
     return $line;
@@ -90,24 +95,25 @@ sub sum_of_digits {
 
 # solution
 
-sub interpolation {
-    my ($n, $u) = @_;
-    return 0 if $n == 0;
-    return $u - $n;
-}
-
 my $n = read_token;
 
-my $sum = sum_of_digits($n);
+my @arr = split q{ }, read_line;
 
-my $remains = $sum % 4;
+my $pre_number = shift @arr;
+my $len = 1;
+my $answer = 0;
 
-if ($remains == 0) {
-    say $n;
-    exit(0);
+for (@arr) {
+    if ($_ <= $pre_number) {
+        $answer = max($answer, $len);
+        $len = 1;
+        $pre_number = $_;
+        next;
+    }
+    $len++;
+    $pre_number = $_;
 }
 
-while (sum_of_digits(++$n) % 4 != 0) {
-}
+$answer = max($answer, $len);
 
-say $n;
+say $answer;
