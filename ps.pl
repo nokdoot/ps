@@ -3,24 +3,24 @@
 use strict;
 use warnings;
 use feature qw/ say /;
-
+    
 use Carp;
-
+    
 # essential
 my @tokens = ();
-
+    
 sub ceil {
     my $n = shift;
     my $in = int($n);
     return $n if $in == $n;
     return $in + 1;
 }
-
+    
 sub say_all {
     my @args = @_;
     say join ' ', @args;
 }
-
+    
 sub read_line {
     chomp (my $line = <STDIN>);
     return $line;
@@ -57,63 +57,42 @@ sub sum {
     }
     return $sum;
 }
-
+    
 sub ref_ref_scalar {
     my $ref = shift;
     return 1 if ref($ref) eq 'SCALAR';
 }
-
+    
 sub toggle {
     my $ref = shift;
     croak "$ref does not reference to scalar" if !ref_ref_scalar($ref);
-
+    
     $$ref = !$$ref;
 }
-
+    
 sub odd {
     my $num = shift;
     return $num % 2 == 1;
 }
-
+    
 sub even {
     my $num = shift;
     return $num % 2 == 0;
 }
-
+    
 sub sum_of_digits {
     my $n = shift;
     my @numbers = split q{}, $n;
-
+    
     my $sum = 0;
-
+    
     for (@numbers) {
         $sum += $_;
     }
-
+    
     return $sum;
 }
-
+    
 # solution
-
-my $n = read_token;
-
-my @arr = split q{ }, read_line;
-
-my $pre_number = shift @arr;
-my $len = 1;
-my $answer = 0;
-
-for (@arr) {
-    if ($_ <= $pre_number) {
-        $answer = max($answer, $len);
-        $len = 1;
-        $pre_number = $_;
-        next;
-    }
-    $len++;
-    $pre_number = $_;
-}
-
-$answer = max($answer, $len);
-
-say $answer;
+    
+my ($x, $y, $s) = split q{ }, read_line;
