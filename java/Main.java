@@ -36,10 +36,10 @@ public class Main {
 
     public static int[] MapInt2Int(int[] src, IntFunction<Integer> f) {
         int n = src.length;
-        int[] target = new int[n];
+        int[] result = new int[n];
         for (int i = 0; i < n; i++) {
-            target[i] = f.apply(src[i]);
+            result[i] = f.apply(src[i]);
         }
-        return target;
+        return result;
     }
 }
