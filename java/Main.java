@@ -2,6 +2,7 @@ package main;
 
 import java.util.*;
 import java.io.*;
+import java.util.function.IntFunction;
 
 /**
  * @author nokdoot
@@ -14,8 +15,9 @@ public class Main {
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
     public static void main(String[] args) throws IOException {
+        }
     }
-    
+
     public static String ReadString() throws IOException {
         return ReadToken();
     }
@@ -30,5 +32,14 @@ public class Main {
             st = new StringTokenizer(line);
         }
         return st.nextToken();
+    }
+
+    public static int[] MapInt2Int(int[] src, IntFunction<Integer> f) {
+        int n = src.length;
+        int[] target = new int[n];
+        for (int i = 0; i < n; i++) {
+            target[i] = f.apply(src[i]);
+        }
+        return target;
     }
 }
