@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 use feature qw/ say /;
-    
+
 use Carp;
     
 # essential
@@ -14,6 +14,11 @@ sub ceil {
     my $in = int($n);
     return $n if $in == $n;
     return $in + 1;
+}
+
+sub is_int {
+    my $n = shift;
+    return $n =~ /^-*\d+$/;
 }
     
 sub say_all {
@@ -94,5 +99,34 @@ sub sum_of_digits {
 }
     
 # solution
-    
-my ($x, $y, $s) = split q{ }, read_line;
+   
+my $count = read_line;
+
+for (1..$count) {
+    my ($a, $b, $c) = split q{ }, read_line;
+    if ($b - $a == $c - $b) {
+        say 'yes';
+        next;
+    }
+    else {
+        my $_a = $b - ($c - $b);
+        my $_b = ($a + $c) / 2;
+        my $_c = $b + ($b - $a);
+
+        if (is_int $_a / $a and $_a / $a > 0) {
+            say 'yes';
+            next;
+        }
+
+        if (is_int $_b / $b and $_b / $c > 0) {
+            say 'yes';
+            next;
+        }
+        
+        if (is_int $_c / $c and $_c / $c > 0) {
+            say 'yes';
+            next;
+        }
+        say 'no';
+    }
+}
