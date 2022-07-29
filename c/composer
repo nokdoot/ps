@@ -1,0 +1,70 @@
+#!/usr/bin/env perl
+
+use strict;
+use feature qw/ say /;
+
+my $sys_include_regex = qr/#include\s+<(.*\.h)>/;
+my $local_include_regex = qr/#include\s+"(.*\.h)"/;
+my $main = 'main.c';
+
+my $sys_include_output = '';
+my $main_output = '';
+my $sys_includes = {};
+
+sub append_sys_include_line {
+    my $sys_include = shift;
+    my $sys_include_name = extract_header_name($sys_include);
+    if (!$sys_includes->{$sys_include}) {
+        $sys_includes->{$sys_include} = 1;
+        $sys_include_output .= $sys_include;
+    }
+}
+
+open my $output, '>', 'submit.c';
+
+sub extract_header_name {
+    my $header = shift;
+    return substr($header, 0, index($header, '.'));
+}
+
+sub include_local_header {
+    my $header_file = shift;
+    my $header_name = extract_header_name($header_file);
+
+    open my $implemt, '<', $header_name.'.c';
+    while (my $line = <$implemt>) {
+        if ($line =~ m/$sys_include_regex/) {
+            append_sys_include_line($line);
+            next;
+        }
+        $main_output .= $line;
+    }
+    $main_output .= "\n";
+    close $implemt;
+}
+
+
+sub compose {
+    sub handle_line {
+        my $line = shift;
+        if ($line =~ m/$local_include_regex/) {
+            return include_local_header($1);
+        }
+        if ($line =~ m/$sys_include_regex/) {
+            return append_sys_include_line($line);
+        }
+        $main_output .= $line;
+    }
+
+    open my $main_fh, '<', $main;
+    while (my $line = <$main_fh>) {
+        handle_line($line);
+    }
+    close $main_fh;
+
+    print $output $sys_include_output;
+    print $output $main_output;
+
+}
+
+compose();
